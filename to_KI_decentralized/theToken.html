@@ -1,0 +1,676 @@
+<script src="https://github.com/ethereum/web3.js/blob/develop/dist/web3.min.js" type="text"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+<script type="text/javascript">
+
+
+
+
+
+
+
+
+
+
+
+//<![CDATA[
+
+    window.addEventListener('load', function() {
+        // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+        if (typeof web3 !== 'undefined') {
+            // Use Mist/MetaMask's provider
+            web3js = new Web3(web3.currentProvider);
+        } else {
+            document.getElementById("2").style.display = "initial";
+            document.getElementById("1").style.display = "none";
+            
+        }
+    });
+    if (typeof web3 === 'undefined') {
+        alert("Bitte installiere einen Web3 Provider");
+    }
+    
+    var contract_address = "0x47264Be43918572151865baDa4D205d4f7574C9C";
+    var contract_abi = [
+        {
+                "constant": true,
+                "inputs": [
+                        {
+                                "name": "",
+                                "type": "address"
+                        }
+                ],
+                "name": "frozenAccount",
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "bool"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+        },
+        {
+                "constant": true,
+                "inputs": [],
+                "name": "totalSupply",
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+        },
+        {
+                "constant": true,
+                "inputs": [],
+                "name": "symbol",
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "string"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+        },
+        {
+                "constant": true,
+                "inputs": [
+                        {
+                                "name": "",
+                                "type": "address"
+                        }
+                ],
+                "name": "balanceOf",
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+        },
+        {
+                "constant": true,
+                "inputs": [
+                        {
+                                "name": "",
+                                "type": "address"
+                        },
+                        {
+                                "name": "",
+                                "type": "address"
+                        }
+                ],
+                "name": "allowance",
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+        },
+        {
+                "constant": true,
+                "inputs": [],
+                "name": "buyPrice",
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+        },
+        {
+                "constant": true,
+                "inputs": [],
+                "name": "owner",
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "address"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+        },
+        {
+                "constant": true,
+                "inputs": [],
+                "name": "name",
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "string"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+        },
+        {
+                "constant": true,
+                "inputs": [],
+                "name": "decimals",
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint8"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+        },
+        {
+                "constant": true,
+                "inputs": [],
+                "name": "sellPrice",
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "view",
+                "type": "function"
+        },
+        {
+                "constant": false,
+                "inputs": [
+                        {
+                                "name": "_to",
+                                "type": "address"
+                        }
+                ],
+                "name": "distributeToken",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+        },
+        {
+                "inputs": [
+                        {
+                                "name": "initialSupply",
+                                "type": "uint256"
+                        },
+                        {
+                                "name": "tokenName",
+                                "type": "string"
+                        },
+                        {
+                                "name": "tokenSymbol",
+                                "type": "string"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "constructor"
+        },
+        {
+                "constant": false,
+                "inputs": [
+                        {
+                                "name": "newSellPrice",
+                                "type": "uint256"
+                        },
+                        {
+                                "name": "newBuyPrice",
+                                "type": "uint256"
+                        }
+                ],
+                "name": "setPrices",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+        },
+        {
+                "constant": false,
+                "inputs": [
+                        {
+                                "name": "newOwner",
+                                "type": "address"
+                        }
+                ],
+                "name": "transferOwnership",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+        },
+        {
+                "constant": false,
+                "inputs": [
+                        {
+                                "name": "_spender",
+                                "type": "address"
+                        },
+                        {
+                                "name": "_value",
+                                "type": "uint256"
+                        },
+                        {
+                                "name": "_extraData",
+                                "type": "bytes"
+                        }
+                ],
+                "name": "approveAndCall",
+                "outputs": [
+                        {
+                                "name": "success",
+                                "type": "bool"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+        },
+        {
+                "constant": false,
+                "inputs": [
+                        {
+                                "name": "target",
+                                "type": "address"
+                        },
+                        {
+                                "name": "freeze",
+                                "type": "bool"
+                        }
+                ],
+                "name": "freezeAccount",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+        },
+        {
+                "constant": false,
+                "inputs": [
+                        {
+                                "name": "_spender",
+                                "type": "address"
+                        },
+                        {
+                                "name": "_value",
+                                "type": "uint256"
+                        }
+                ],
+                "name": "approve",
+                "outputs": [
+                        {
+                                "name": "success",
+                                "type": "bool"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+        },
+        {
+                "constant": false,
+                "inputs": [
+                        {
+                                "name": "target",
+                                "type": "address"
+                        },
+                        {
+                                "name": "mintedAmount",
+                                "type": "uint256"
+                        }
+                ],
+                "name": "mintToken",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+        },
+        {
+                "constant": false,
+                "inputs": [],
+                "name": "buy",
+                "outputs": [],
+                "payable": true,
+                "stateMutability": "payable",
+                "type": "function"
+        },
+        {
+                "anonymous": false,
+                "inputs": [
+                        {
+                                "indexed": true,
+                                "name": "from",
+                                "type": "address"
+                        },
+                        {
+                                "indexed": false,
+                                "name": "value",
+                                "type": "uint256"
+                        }
+                ],
+                "name": "Burn",
+                "type": "event"
+        },
+        {
+                "anonymous": false,
+                "inputs": [
+                        {
+                                "indexed": false,
+                                "name": "target",
+                                "type": "address"
+                        },
+                        {
+                                "indexed": false,
+                                "name": "frozen",
+                                "type": "bool"
+                        }
+                ],
+                "name": "FrozenFunds",
+                "type": "event"
+        },
+        {
+                "anonymous": false,
+                "inputs": [
+                        {
+                                "indexed": true,
+                                "name": "from",
+                                "type": "address"
+                        },
+                        {
+                                "indexed": true,
+                                "name": "to",
+                                "type": "address"
+                        },
+                        {
+                                "indexed": false,
+                                "name": "value",
+                                "type": "uint256"
+                        }
+                ],
+                "name": "Transfer",
+                "type": "event"
+        },
+        {
+                "constant": false,
+                "inputs": [
+                        {
+                                "name": "_to",
+                                "type": "address"
+                        },
+                        {
+                                "name": "_value",
+                                "type": "uint256"
+                        }
+                ],
+                "name": "transfer",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+        },
+        {
+                "constant": false,
+                "inputs": [
+                        {
+                                "name": "_from",
+                                "type": "address"
+                        },
+                        {
+                                "name": "_value",
+                                "type": "uint256"
+                        }
+                ],
+                "name": "burnFrom",
+                "outputs": [
+                        {
+                                "name": "success",
+                                "type": "bool"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+        },
+        {
+                "constant": false,
+                "inputs": [
+                        {
+                                "name": "amount",
+                                "type": "uint256"
+                        }
+                ],
+                "name": "sell",
+                "outputs": [],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+        },
+        {
+                "constant": false,
+                "inputs": [
+                        {
+                                "name": "_from",
+                                "type": "address"
+                        },
+                        {
+                                "name": "_to",
+                                "type": "address"
+                        },
+                        {
+                                "name": "_value",
+                                "type": "uint256"
+                        }
+                ],
+                "name": "transferFrom",
+                "outputs": [
+                        {
+                                "name": "success",
+                                "type": "bool"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+        },
+        {
+                "constant": false,
+                "inputs": [
+                        {
+                                "name": "_value",
+                                "type": "uint256"
+                        }
+                ],
+                "name": "burn",
+                "outputs": [
+                        {
+                                "name": "success",
+                                "type": "bool"
+                        }
+                ],
+                "payable": false,
+                "stateMutability": "nonpayable",
+                "type": "function"
+        }
+];
+    var contract_instance = web3.eth.contract(contract_abi).at(contract_address);            
+    
+    var funds = "a";
+    
+    function getBalanceX() {
+        var d = $.Deferred();
+        setTimeout(function(){
+            console.log("started getBalance");
+            web3.eth.getBalance(web3.eth.accounts[0], function(error, result){
+                var balance = web3.fromWei(result, "ether").toString(10);
+                if(!error) {
+                    document.getElementById("myBalance").innerText = balance+ " in Ether";
+                } else {
+                    console.error(error);
+                }
+                if(balance === "0"){
+                    document.getElementById("3").style.display = "initial";
+                    console.log("no funds (getBalance)");
+                    funds = false;
+                    console.log(funds )
+                } else {
+                    funds = true;
+                }
+            });
+            d.resolve();
+        }, 1000);
+        console.log("end of getBalance");
+        console.log(funds + " funds end of getbalance");
+        return d.promise();
+    }
+    
+    function claim() {
+        promise = getBalanceX().then(actualClaim);
+    }         function getAddress() {
+        console.log(web3.eth.accounts[0]);
+        document.getElementById("_to").value = web3.eth.accounts[0];
+        claim();
+    }
+    
+    function actualClaim() {
+        console.log("start of actual claim");
+        var d = $.Deferred();
+        setTimeout(function(){
+            console.log(funds + " funds from actual claim");
+            if(!funds){
+                console.log("no funds (actualClaim)");
+                alert("You don't have enough Test Ether for this transaction!");
+            } else {
+                console.log("Past the funds check");
+                var address = document.getElementById("_to").value;
+                var isValidAddress = web3.isAddress(address);
+                if (isValidAddress) {
+                    contract_instance.distributeToken(address, function(err, result){
+                        if(err) console.error(err);
+                    });
+                }
+            }
+            d.resolve();
+        }, 1000);
+        return d.promise();
+    }
+//]]>
+</script>
+<style>
+
+
+
+
+
+
+
+
+
+/* <![CDATA[ */
+
+.someSpace {
+    height: 20px;
+}
+            
+.moreSpace {
+    height: 40px;
+}
+            
+.btn {
+  background: #ebe238;
+  background-image: -webkit-linear-gradient(top, #ebe238, #b8902b);
+  background-image: -moz-linear-gradient(top, #ebe238, #b8902b);
+  background-image: -ms-linear-gradient(top, #ebe238, #b8902b);
+  background-image: -o-linear-gradient(top, #ebe238, #b8902b);
+  background-image: linear-gradient(to bottom, #ebe238, #b8902b);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: #d6be36;
+  background-image: -webkit-linear-gradient(top, #d6be36, #876f0f);
+  background-image: -moz-linear-gradient(top, #d6be36, #876f0f);
+  background-image: -ms-linear-gradient(top, #d6be36, #876f0f);
+  background-image: -o-linear-gradient(top, #d6be36, #876f0f);
+  background-image: linear-gradient(to bottom, #d6be36, #876f0f);
+  text-decoration: none;
+}
+/*]]>*/
+</style>
+<div id="1">
+    <div>
+        <span><u>Disclaimer:</u> You get Tokens on the Rinkeby Testnetwork. The contract address for the tokens is: <a href=
+        "https://rinkeby.etherscan.io/token/0x47264be43918572151865bada4d205d4f7574c9c?a=0x47264be43918572151865bada4d205d4f7574c9c">0x47264Be43918572151865baDa4D205d4f7574C9C</a></span><br />
+        <span>You will get 20FT Tokens. Look at the section <a href="https://thetoken.jimdo.com/about-1/">About</a> for more information.</span>
+    </div>
+
+    <div class="someSpace">
+    </div>
+
+    <div id="3" style="display: none;">
+        <h1>
+            Get some test ether?
+        </h1>
+        <span>It looks like you don't have any Rinkeby test-ether! You won't be able to do any transactions or claim your tokens without test-ether.</span><br />
+        <span>Get your fix directly from the <a href="https://www.rinkeby.io/#faucet">Rinkeby faucet!!</a> Don't worry, it is all free.</span>
+    </div>
+
+    <div class="someSpace">
+    </div>
+
+    <h1 style="text-align: center;">
+        This is how we Token
+    </h1>
+    Please send them tokens to this address: <button class="btn" onclick="getAddress()">Use Current Ether-Address</button>
+    <div class="someSpace">
+    </div>
+
+    <form>
+        <input type="text" id="_to" placeholder="Send to this address" style="width: 100%; background-color: LightGrey; border: none; padding: 15px;" />
+    </form>
+    <br />
+
+    <div style="text-align:center;">
+        <button class="btn" style="" onclick="claim()">Gimme</button>
+    </div>
+
+    <div class="someSpace">
+    </div>
+
+    <hr />
+
+    <div class="moreSpace">
+    </div>
+
+    <h4>
+        Check your ether Balance
+    </h4>
+    <button onclick="getBalanceX()">Check my balance</button> <span id="myBalance"></span>
+</div>
+
+<div id="2" style="display: none;">
+    Es sieht so aus, als ob du keinen Web3 Provider in deinem Browser hast. Installiere <a href="https://metamask.io">Metamask</a> oder einen anderen Web3 Provider und wähle das 'Rinkeby Test
+    Network' aus, um diese Website nutzen zu können.
+</div>
