@@ -1,6 +1,6 @@
-# to_KI_decentralized
+# for_references
 
-These projectfiles are a reference for my work.
+These projectfiles are a reference of my work.
 They are not encrypted and can be freely accessed.
 
 Info on each of the projects:
@@ -28,3 +28,4 @@ https://appetize.io/app/yrw7nanc4x1y42v94ag745c4kg?
 I got into theCybe
 https://etherscan.io/address/0xbB902569a997D657e8D10B82Ce0ec5A5983C8c7C
 at index 53: 0x96C85035e25B31b7D0c15D11149B2479E4edC704
+Signed message from that address in "CyberAddress.txt" as a proof of ownership.

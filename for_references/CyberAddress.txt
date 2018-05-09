@@ -1,0 +1,10 @@
+{
+  "address": "0x96c85035e25b31b7d0c15d11149b2479e4edc704",
+  "msg": "Hello, this address belongs to Felix Dolderer.",
+  "sig": "0x663d20dc6b974e67e7e143b107826dff0fcf51584d09c9305c57f2862808c085210881bafc29b23c57bfaf4c3735539869bed2cb1a878f9d41cf47b23c4e0c781b",
+  "version": "3",
+  "signer": "web3"
+}
+
+Signed Message from the Account in the Cyber at index 53.
+Can be verified at: https://www.myetherwallet.com/signmsg.html
